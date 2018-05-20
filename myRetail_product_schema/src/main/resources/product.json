@@ -1,0 +1,164 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "APIs",
+    "description": "API specification for retail Product service",
+    "version": "1.0.0",
+    "apiplatform": {
+      "companyPlatform": "retail",
+      "targetEndpoints": {
+        "default": {
+          "url": "http://localhost",
+          "transportSecurityType": "1WaySSL"
+        }
+      }
+    }
+  },
+  "host": "localhost",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/retail",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/products/{product_identifier}": {
+      "get": {
+        "summary": "Get product details",
+        "description": "API to get the products details from the product ID in request",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Product details",
+            "schema": {
+              "$ref": "#/definitions/product_response"
+            }
+          },
+          "404": {
+            "description": "Product not available"
+          },
+          "400": {
+            "description": "Invalid request. Please check the response for error details.",
+            "schema": {
+              "$ref": "#/definitions/global_response"
+            }
+          },
+          "500": {
+            "description": "Application error. Please check the response for error details.",
+            "schema": {
+              "$ref": "#/definitions/global_response"
+            }
+          }
+        },
+        "tags": [
+          "product"
+        ]
+      }
+    },
+    "/v1/product/{product_identifier}": {
+      "post": {
+        "summary": "Update product details",
+        "description": "API to update the existing product details",
+        "responses": {
+          "200": {
+            "description": "Successfully updated Product details",
+            "schema": {
+              "$ref": "#/definitions/product_response"
+            }
+          },
+          "400": {
+            "description": "Invalid request. Please check the response for error details.",
+            "schema": {
+              "$ref": "#/definitions/global_response"
+            }
+          },
+          "500": {
+            "description": "Application error. Please check the response for error details.",
+            "schema": {
+              "$ref": "#/definitions/global_response"
+            }
+          }
+        },
+        "tags": [
+          "product"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "product_detail_response": {
+      "properties": {
+        "global_response": {
+          "$ref": "#/definitions/global_response"
+        },
+        "product": {
+          "$ref": "#/definitions/product_detail"
+        }
+      },
+      "required": [
+        "global_response"
+      ]
+    },
+    "global_response": {
+      "description": "Wrapper for the common response object",
+      "type": "object",
+      "properties": {
+        "request_identifier": {
+          "description": "Unique identifier for the request. Will be used to debug the issues.",
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 50
+        },
+        "explanation_code": {
+          "description": "Response Code, 'RT0000' is success code. Refer to API documentation section for all possible response codes",
+          "type": "string"
+        },
+        "explanation_message": {
+          "description": "Response code description.",
+          "type": "string"
+        },
+        "response_timestamp": {
+          "description": "Time stamp of response in MST, format is yyyy-MM-ddTHH:mm:ss.SSSZ",
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "request_identifier",
+        "response_timestamp",
+        "explanation_code",
+        "explanation_message"
+      ]
+    },
+    "product_detail": {
+      "description": "Details of the Product",
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "description": "Unique identifier for the product.",
+          "type": "integer",
+          "format": "int32"
+        },
+        "title": {
+          "description": "Product title",
+          "type": "string"
+        },
+        "price": {
+          "description": "Product price",
+          "type": "object",
+          "properties": {
+            "amount": {
+              "description": "value",
+              "type": "number",
+              "format": "double"
+            },
+            "currency_code": {
+              "description": "currency code, eg: USD , AUD",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
