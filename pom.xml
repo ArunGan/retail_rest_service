@@ -12,7 +12,9 @@
 
     <modules>
         <module>/myRetail_product_schema</module>
-        <module>/myRetail_product</module>
+        <module>/myRetail_product_dao</module>
+        <module>/myRetail_product_service</module>
+        <module>/myRetail_product_router</module>
 
     </modules>
 
