@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Item {
+public class ItemInfo {
 
     @JsonProperty("product_description")
     private ProductDescription productDescription;
@@ -22,7 +22,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item [onlineDescription=" + productDescription + "]";
+        return "ItemInfo [onlineDescription=" + productDescription + "]";
     }
 
 }

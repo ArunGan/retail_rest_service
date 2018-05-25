@@ -1,19 +1,20 @@
 package com.myretailproduct.service.Validator;
 
-import com.myretailproduct.service.Exception.InvalidProductException;
-import com.myretailproduct.service.beans.Product;
+import com.myretailproduct.service.model.Product;
 
-/**
- * Product validator utilities
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ValidatorUtil {
 
-    public static void validateProduct(Product product) throws InvalidProductException{
+    public static void validateProduct(Product product) {
+        List<ProductRule> rules = new ArrayList<>();
 
-        Validator validator = validateproduct -> product != null && product.getProductIdentifier()!= null && product.getAmount() !=null;
+        rules.add(new ProductValidatorRule());
+        rules.add(new AmountValidatorRule());
 
-        if(!validator.isValidProduct(product)){
-            throw new InvalidProductException("Product identifier or price is missing");
+        for (ProductRule rule : rules) {
+            rule.validate(product);
         }
 
     }

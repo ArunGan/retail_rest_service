@@ -1,6 +1,6 @@
 package com.myretailproduct.service.dao;
 
-import com.myretailproduct.service.beans.Product;
+import com.myretailproduct.service.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**

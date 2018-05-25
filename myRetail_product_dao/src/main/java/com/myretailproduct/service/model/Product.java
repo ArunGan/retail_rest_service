@@ -1,4 +1,4 @@
-package com.myretailproduct.service.beans;
+package com.myretailproduct.service.model;
 
 import com.myretailproduct.service.Exception.InvalidProductException;
 import org.springframework.data.annotation.Id;

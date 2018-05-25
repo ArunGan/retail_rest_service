@@ -1,7 +1,6 @@
-package com.myretailproduct.service.beans;
+package com.myretailproduct.service.model;
 
 import com.myretailproduct.service.Exception.InvalidProductException;
-import org.springframework.util.StringUtils;
 
 /**
  * Created by agane13 on 11/11/17.
@@ -26,10 +25,6 @@ public class Amount {
     }
 
     public void setPrice(Double price) {
-
-        if (price == null || price <= 0) {
-            throw new InvalidProductException("Amount", "Amount", "Invalid price, should be greated than zero");
-        }
         this.price = price;
     }
 
@@ -39,9 +34,6 @@ public class Amount {
 
     public void setCurrencyCode(String currencyCode) {
 
-        if (StringUtils.isEmpty(currencyCode)) {
-            throw new InvalidProductException("Amount", "Amount", "Currency code is Invalid");
-        }
         this.currencyCode = currencyCode;
     }
 

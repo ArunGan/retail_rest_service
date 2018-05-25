@@ -30,6 +30,7 @@ public class ProductService {
 
     /**
      * Provides the product details
+     *
      * @param identifier
      * @param request
      * @return
@@ -40,7 +41,7 @@ public class ProductService {
     public ResponseEntity<ProductDetail> getProduct(@PathVariable("identifier") Integer identifier,
                                                     HttpServletRequest request) throws ProductInformationNotAvailableException {
 
-        log.info("ProductService.getProduct(" + identifier + ")");
+        log.info("ProductService.getProductInfo(" + identifier + ")");
         ProductDetail productDetail = productProcessor.getProductDetails(identifier);
 
         return new ResponseEntity<ProductDetail>(productDetail, null, HttpStatus.OK);
@@ -50,6 +51,7 @@ public class ProductService {
     /**
      * Stores product info
      * Accepts a json request body in the following format
+     *
      * @param identifier
      * @param newPrice
      * @return

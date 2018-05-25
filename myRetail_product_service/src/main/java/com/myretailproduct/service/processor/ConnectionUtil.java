@@ -14,6 +14,7 @@ public class ConnectionUtil {
 
     /**
      * returns a rest template with fixed connection pool and timeout settings
+     *
      * @return
      */
     public static RestTemplate getRestTemplate() {

@@ -10,30 +10,30 @@ import com.myretailproduct.service.Exception.ProductInformationNotAvailableExcep
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ProductDetailResponse {
+public class ProductInformation {
 
-    @JsonProperty("product")
-    private Product product;
+    @JsonProperty("productInfo")
+    private ProductDetailInfo productInfo;
 
-    public Product getProduct() {
-        return product;
+    public ProductDetailInfo getProductInfo() {
+        return productInfo;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductInfo(ProductDetailInfo productInfo) {
+        this.productInfo = productInfo;
     }
 
     public String getProductTitle() throws ProductInformationNotAvailableException {
         try {
-            return getProduct().getItem().getProductDescription().getTitle();
+            return getProductInfo().getItemInfo().getProductDescription().getTitle();
         } catch (Exception e) {
-            throw new ProductInformationNotAvailableException("Item Online Description is unavailable");
+            throw new ProductInformationNotAvailableException("ItemInfo Online Description is unavailable");
         }
     }
 
     @Override
     public String toString() {
-        return "Response [productCompositeResponse=" + product + "]";
+        return "Response [productCompositeResponse=" + productInfo + "]";
     }
 }
 

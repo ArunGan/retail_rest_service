@@ -4,6 +4,8 @@ package com.myretailproduct.service.controller;
 import com.myretail.product.model.ProductDetail;
 import com.myretail.product.model.ProductDetailPrice;
 import com.myretailproduct.service.Exception.ProductInformationNotAvailableException;
+import com.myretailproduct.service.model.Amount;
+import com.myretailproduct.service.model.Product;
 import com.myretailproduct.service.processor.ProductProcessor;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,6 +40,7 @@ public class ProductServiceTest {
     ProductService restService = null;
 
     ProductDetail mockProd;
+    Product product;
     ProductDetailPrice mockPrice;
     Map<String, String> headers;
     HttpServletRequest httpServletRequestMock;
@@ -51,9 +54,20 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testGetProduct() throws ProductInformationNotAvailableException {
+    public void testGetProduct_httpStatusSuccess() throws ProductInformationNotAvailableException {
 
+        PowerMockito.when(productProcessorMock.getProductDetails(MockDataConstants.sonyIdentifier)).thenReturn(mockProd);
         ResponseEntity<ProductDetail> response = restService.getProduct(MockDataConstants.sonyProduct.getIdentifier(), httpServletRequestMock);
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void testGetProduct_ValidateProductDetail() throws ProductInformationNotAvailableException {
+
+        PowerMockito.when(productProcessorMock.getProductDetails(MockDataConstants.sonyIdentifier)).thenReturn(mockProd);
+        ResponseEntity<ProductDetail> response = restService.getProduct(MockDataConstants.sonyProduct.getIdentifier(), httpServletRequestMock);
+
 
         Assert.assertNotNull(response);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -70,28 +84,51 @@ public class ProductServiceTest {
         Assert.assertEquals("application/json", headers.get("Content-Type"));
     }
 
+    @Test
+    public void testGetProduct_responseHeaders() throws ProductInformationNotAvailableException {
 
-    @Ignore
-    public void testGetProduct_InvalidProduct() throws ProductInformationNotAvailableException {
+        PowerMockito.when(productProcessorMock.getProductDetails(MockDataConstants.sonyIdentifier)).thenReturn(mockProd);
+        ResponseEntity<ProductDetail> response = restService.getProduct(MockDataConstants.sonyProduct.getIdentifier(), httpServletRequestMock);
 
-        ProductDetail mockProd = null;
-        PowerMockito.when(productProcessorMock.getProductDetails(13860428)).thenReturn(mockProd);
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("Content-Type", "application/json");
-        Enumeration<String> headerNames = Collections.enumeration(headers.keySet());
-        HttpServletRequest httpServletRequestMock = PowerMockito.mock(HttpServletRequest.class);
-        PowerMockito.when(httpServletRequestMock.getHeaderNames()).thenReturn(headerNames);
-        PowerMockito.when(httpServletRequestMock.getHeader("Content-Type")).thenReturn("application/json");
 
-        ResponseEntity<ProductDetail> response = null;//mockService.getProduct(13860428, httpServletRequestMock);
         Assert.assertNotNull(response);
-        Assert.assertNull(response.getBody());
+        HttpHeaders actualHeaders = response.getHeaders();
+        Assert.assertEquals("application/json", headers.get("Content-Type"));
+    }
 
+    @Test(expected = ProductInformationNotAvailableException.class)
+    public void testGetProduct_unavailable() throws ProductInformationNotAvailableException {
+
+        PowerMockito.when(productProcessorMock.getProductDetails(MockDataConstants.sonyIdentifier)).thenThrow(new ProductInformationNotAvailableException(MockDataConstants.sonyProduct.getTitle()));
+
+        restService.getProduct(MockDataConstants.sonyProduct.getIdentifier(), httpServletRequestMock);
+
+
+    }
+
+    @Test
+    public void testUpdateProduct_successUpdate() throws ProductInformationNotAvailableException {
+
+        PowerMockito.when(productProcessorMock.updateProductPrice(MockDataConstants.sonyIdentifier, mockPrice)).thenReturn(product);
+
+        ResponseEntity<String>  response = restService.updateProduct(MockDataConstants.sonyIdentifier,mockPrice);
+        Assert.assertNotNull(response);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+
+    }
+
+    @Test(expected = ProductInformationNotAvailableException.class)
+    public void testUpdateProduct_ProdNotAvailable() throws ProductInformationNotAvailableException {
+
+        PowerMockito.when(productProcessorMock.updateProductPrice(MockDataConstants.sonyIdentifier,mockPrice)).thenThrow(new ProductInformationNotAvailableException("Product not available"));
+
+        restService.updateProduct(MockDataConstants.sonyProduct.getIdentifier(), mockPrice);
 
     }
 
 
     private void setMockTestData() {
+        product = new Product(13860428, new Amount(15.88d, "USD"));
         mockProd = new ProductDetail();
         mockProd.setIdentifier(13860428);
         mockProd.setTitle("Sony Bravia TV");

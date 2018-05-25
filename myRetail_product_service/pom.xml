@@ -60,9 +60,9 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
         <dependency>
-        <groupId>com.retail.product.dao</groupId>
-        <artifactId>retail_product_dao</artifactId>
-        <version>1.0-SNAPSHOT</version>
+            <groupId>com.retail.product.dao</groupId>
+            <artifactId>retail_product_dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.retail.product.schema</groupId>
@@ -80,7 +80,6 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>

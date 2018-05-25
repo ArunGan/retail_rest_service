@@ -1,6 +1,6 @@
 <b>Technical Assessment - MyRetail RESTful Service</b>
 -----------------------------------------
-The goal for this exercise is to create an end-to-end Proof-of-Concept for a products API which will aggregate product data from multiple sources and return it as JSON to the caller.
+The goal for this exercise is to create an end-to-end Proof-of-Concept for a products API which will aggregate productInfo data from multiple sources and return it as JSON to the caller.
 
 Technologies/Plugin Used
 -----------------------------------------

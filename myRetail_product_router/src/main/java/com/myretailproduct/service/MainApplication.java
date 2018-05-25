@@ -1,9 +1,9 @@
 package com.myretailproduct.service;
 
 
-import com.myretailproduct.service.beans.Amount;
-import com.myretailproduct.service.beans.Product;
 import com.myretailproduct.service.dao.ProductDAO;
+import com.myretailproduct.service.model.Amount;
+import com.myretailproduct.service.model.Product;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,15 +20,15 @@ import javax.annotation.PostConstruct;
 @ComponentScan("com.myretailproduct")
 public class MainApplication {
 
+    static Logger log = Logger.getLogger(MainApplication.class);
     @Autowired
     private ProductDAO repository;
-
     @Value("${environment}")
     private String env;
-    static Logger log = Logger.getLogger(MainApplication.class);
 
     /**
      * Main method to start spring app
+     *
      * @param args
      */
     public static void main(String[] args) {
