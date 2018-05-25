@@ -5,24 +5,26 @@ package com.myretailproduct.service.beans.productMasterApi;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDetailInfo {
 
-    private ItemInfo itemInfo;
+    @JsonProperty("item")
+    private ItemInfo item;
 
     public ItemInfo getItemInfo() {
-        return itemInfo;
+        return item;
     }
 
     public void setItemInfo(ItemInfo itemInfo) {
-        this.itemInfo = itemInfo;
+        this.item = itemInfo;
     }
 
     @Override
     public String toString() {
         return "ProductDetailInfo{" +
-                "itemInfo=" + itemInfo +
+                "itemInfo=" + item +
                 '}';
     }
 }

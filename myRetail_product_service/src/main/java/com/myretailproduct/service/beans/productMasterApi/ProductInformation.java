@@ -12,7 +12,7 @@ import com.myretailproduct.service.Exception.ProductInformationNotAvailableExcep
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductInformation {
 
-    @JsonProperty("productInfo")
+    @JsonProperty("product")
     private ProductDetailInfo productInfo;
 
     public ProductDetailInfo getProductInfo() {
@@ -33,7 +33,7 @@ public class ProductInformation {
 
     @Override
     public String toString() {
-        return "Response [productCompositeResponse=" + productInfo + "]";
+        return "Response [productInfo=" + productInfo + "]";
     }
 }
 

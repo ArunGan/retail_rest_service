@@ -35,11 +35,11 @@ public class ProductProcessorImplTest {
     @InjectMocks
     ProductProcessorImpl processor;
 
-    @Spy
+    @Spy //spy calls real method unless mocked
     private ProductDAO daoMock = PowerMockito.mock(ProductDAO.class);
     @Spy
     private DataCollector dataCollectorMock = PowerMockito.mock(DataCollector.class);
-    ;
+
 
     private String productURL;
 
@@ -48,12 +48,6 @@ public class ProductProcessorImplTest {
         MockitoAnnotations.initMocks(this);
         setMockTestData();
         setMockMethodActions();
-    }
-
-
-    @Bean
-    public ProductDAO getDaoMock() {
-        return daoMock;
     }
 
     @Test
@@ -89,6 +83,15 @@ public class ProductProcessorImplTest {
 
         PowerMockito.when(dataCollectorMock.getProductDetail(MockDataConstants.sonyIdentifier)).thenReturn(mockProductInformation);
         PowerMockito.when(dataCollectorMock.getProductPrice(MockDataConstants.sonyIdentifier)).thenThrow(new ProductInformationNotAvailableException("Product not available"));
+        processor.getProductDetails(MockDataConstants.sonyIdentifier);
+
+    }
+
+    @Test(expected = ProductInformationNotAvailableException.class)
+    public void testGetProductDetails_unAvailableProductName() throws Exception {
+
+        PowerMockito.when(dataCollectorMock.getProductDetail(MockDataConstants.sonyIdentifier)).thenThrow(new ProductInformationNotAvailableException("Product not available"));
+        PowerMockito.when(dataCollectorMock.getProductPrice(MockDataConstants.sonyIdentifier)).thenReturn(MockDataConstants.sonyPrice);
         processor.getProductDetails(MockDataConstants.sonyIdentifier);
 
     }

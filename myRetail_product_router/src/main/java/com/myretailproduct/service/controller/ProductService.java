@@ -6,6 +6,7 @@ import com.myretailproduct.service.Exception.ProductInformationNotAvailableExcep
 import com.myretailproduct.service.processor.ProductProcessor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,11 +41,11 @@ public class ProductService {
             produces = "application/json;charset=UTF-8")
     public ResponseEntity<ProductDetail> getProduct(@PathVariable("identifier") Integer identifier,
                                                     HttpServletRequest request) throws ProductInformationNotAvailableException {
-
+        HttpHeaders headers = new HttpHeaders();
         log.info("ProductService.getProductInfo(" + identifier + ")");
         ProductDetail productDetail = productProcessor.getProductDetails(identifier);
 
-        return new ResponseEntity<ProductDetail>(productDetail, null, HttpStatus.OK);
+        return new ResponseEntity<ProductDetail>(productDetail, headers, HttpStatus.OK);
     }
 
 
@@ -61,10 +62,10 @@ public class ProductService {
     public ResponseEntity<String> updateProduct(@PathVariable("identifier") Integer identifier, @RequestBody ProductDetailPrice newPrice)
             throws ProductInformationNotAvailableException {
         log.info("ProductService.updateProduct(" + identifier + "); newPrice = " + newPrice);
-
+        HttpHeaders headers = new HttpHeaders();
         productProcessor.updateProductPrice(identifier, newPrice);
 
-        return new ResponseEntity<String>(null, null, HttpStatus.OK);
+        return new ResponseEntity<String>(null, headers, HttpStatus.OK);
     }
 
 }
